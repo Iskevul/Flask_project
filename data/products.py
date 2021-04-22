@@ -11,6 +11,7 @@ class Product(SqlAlchemyBase, UserMixin, SerializerMixin):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    type = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     price = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     description = sqlalchemy.Column(sqlalchemy.Text, nullable=True)
     image = sqlalchemy.Column(sqlalchemy.String, nullable=True)

@@ -1,12 +1,4 @@
 {% extends "base.html" %}
-{% block head %}
-	<link rel="stylesheet" type="text/css" href="../static/css/mybootstrap.css">
-	<link rel="stylesheet" type="text/css" href="../static/css/buttons.css">
-{% endblock %}
-{% block title %}
-	<a class="reg-button" href="login">Login</a>
-    <a class="log-button" href="register">Register</a>
-{% endblock %}
 {% block content %}
 	<h1>Adding a Product</h1>
 	<form action="" method="post">
@@ -15,6 +7,15 @@
             {{ form.name.label }}<br>
             {{ form.name(class="form-control") }}<br>
             {% for error in form.name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.type.label }}<br>
+            {{ form.type(class="form-control") }}<br>
+            {% for error in form.type.errors %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}
                 </div>

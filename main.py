@@ -40,6 +40,13 @@ def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
 
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
     form = RegisterForm()
@@ -76,11 +83,11 @@ def login():
             return redirect("/")
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            # jobs = db_sess.query(Jobs).filter(News.is_private == False)
-            return render_template('index.html', name=user.name)
+            prod = db_sess.query(Product).all()
+            return render_template('index.html', name=user.name, prod=prod)
         return render_template('login.html',
-                               message="Неправильный логин или пароль",
-                               form=form)
+                                   message="Неправильный логин или пароль",
+                                   form=form)
     return render_template('login.html', title='Авторизация', form=form)
 
 
@@ -97,6 +104,7 @@ def addproduct():
                                    message="Такой продукт уже есть")
         prod = Product(
             name=form.name.data,
+            type=form.type.data,
             price=form.price.data,
             description=form.description.data
         )

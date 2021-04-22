@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired
 
 class ProductForm(FlaskForm):
     name = StringField('Название', validators=[DataRequired()])
+    type = StringField('Тип', validators=[DataRequired()])
     price = IntegerField('Цена', validators=[DataRequired()])
     description = TextAreaField('Описание')
     submit = SubmitField('Добавить')

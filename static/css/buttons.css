@@ -15,3 +15,15 @@
 	border-radius: 10px; 
 	margin: 0 10px;
 }
+
+.username {
+	text-decoration: none; 
+	align-self: center; 
+	margin-right: 50px; 
+	color: black;
+}
+
+.username:hover {
+	color: white;
+	transition: 0.5s;
+}

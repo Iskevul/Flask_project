@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block head %}
+	<link rel="stylesheet" type="text/css" href="../static/css/mybootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/buttons.css">
+{% endblock %}
+{% block title %}
+	<a class="reg-button" href="login">Login</a>
+    <a class="log-button" href="register">Register</a>
+{% endblock %}
+{% block content %}
+	<h1>Adding a Product</h1>
+	<form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(class="form-control") }}<br>
+            {% for error in form.name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.price.label }}<br>
+            {{ form.price(class="form-control") }}<br>
+            {% for error in form.price.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.description.label }}<br>
+            {{ form.description(class="form-control") }}<br>
+            {% for error in form.description.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <div>{{ message }}</div>
+    </form>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block head %}
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="../static/css/buttons.css">
+{% endblock %}
+{% block title %}
+	<a class="reg-button" href="login">Login</a>
+    <a class="log-button" href="register">Register</a>
+{% endblock %}
+{% block content %}
+<div class="container">
+	<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+{% for item in prod %}
+	
+	    <div class="col">
+	      <div class="card mb-4 shadow-sm">
+		      <div class="card-header">
+		        <h4 class="my-0 font-weight-normal">{{item.name}}</h4>
+		      </div>
+		      <div class="card-body">
+		        <h1 class="card-title pricing-card-title">{{item.price}}</h1>
+		        <ul class="list-unstyled mt-3 mb-4">
+		          <li>{{item.description}}</li>
+		         
+		        </ul>
+		        <button type="button" class="btn btn-lg btn-block btn-primary">Купить</button>
+		      </div>
+		    </div>
+	    </div>
+    
+{% endfor %}
+	</div>
+</div>
+{% endblock %}

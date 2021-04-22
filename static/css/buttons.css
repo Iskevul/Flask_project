@@ -1,0 +1,17 @@
+.reg-button {
+	padding: 15px 40px;
+	color: white; 
+	background-color: black; 
+	text-decoration: none; 
+	border-radius: 10px; 
+	margin: 0 10px;
+}
+
+.log-button {
+	padding: 15px 40px; 
+	color: white; 
+	background-color: black; 
+	text-decoration: none; 
+	border-radius: 10px; 
+	margin: 0 10px;
+}

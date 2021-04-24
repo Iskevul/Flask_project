@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
 	<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-{% for item in prod %}
+{% for item in basket.products %}
 	
 	    <div class="col">
 	      <div class="card mb-4 shadow-sm">
@@ -16,12 +16,7 @@
 		          <li>{{item.description}}</li>
 		        </ul>
 		        {% if current_user.is_authenticated %}
-		        	{% if current_user.id == 1 %}
-						<a type="button" class="btn btn-lg btn-block btn-success" href="/buy/{{item.id}}">Купить</a>
-						<a type="button" class="btn btn-lg btn-block btn-danger" href="/delete_item/{{item.id}}">Удалить</a>
-					{% else %}
-						<a type="button" class="btn btn-lg btn-block btn-success" href="/buy/{{item.id}}">Купить</a>
-					{% endif %}
+					<a type="button" class="btn btn-lg btn-block btn-danger" href="/delete_item_from_basket/{{item.id}}">Удалить</a>
 				{% endif %}
 		        
 		      </div>

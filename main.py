@@ -3,6 +3,7 @@ from flask import render_template, redirect
 from data import db_session
 from data.users import User
 from data.products import Product
+from data.baskets import Basket
 from forms.user_form import *
 from forms.product_form import ProductForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
@@ -23,12 +24,50 @@ def index():
     return render_template("index.html", prod=prod)
 
 
+@app.route('/view_basket', methods=["GET", "POST"])
+def view_basket():
+    db_sess = db_session.create_session()
+    basket = db_sess.query(Basket).filter(Basket.user_id == current_user.id).first()
+    prod = db_sess.query(Product).all()
+
+    return render_template("view_basket.html", prod=prod, basket=basket)
+
+
+
+@app.route('/buy/<int:id>', methods=["GET", "POST"])
+def buy(id):
+    db_sess = db_session.create_session()
+    product = db_sess.query(Product).filter(Product.id == id).first()
+    basket = db_sess.query(Basket).filter(Basket.user_id == current_user.id).first()
+    basket.products.append(product)
+    db_sess.commit()
+    return redirect("/")
+
+
+@app.route('/delete_item/<int:id>', methods=["GET", "POST"])
+def delete_item(id):
+    db_sess = db_session.create_session()
+    product = db_sess.query(Product).filter(Product.id == id).first()
+    db_sess.delete(product)
+    db_sess.commit()
+    return redirect("/")
+
+
+@app.route('/delete_item_from_basket/<int:id>', methods=["GET", "POST"])
+def delete_item_from_basket(id):
+    db_sess = db_session.create_session()
+    product = db_sess.query(Product).filter(Product.id == id).first()
+    basket = db_sess.query(Basket).filter(Basket.user_id == current_user.id).first()
+    basket.products.remove(product)
+    db_sess.commit()
+    return redirect("/view_basket")
+
+
+
 @app.route('/main', methods=["GET", "POST"])
 def main():
     db_session.global_init("db/blogs.db")
     db_sess = db_session.create_session()
-    # db_sess.query(User).delete()
-    # db_sess.query(Product).delete()
     db_sess.commit()
 
     app.run()
@@ -69,6 +108,12 @@ def reqister():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
+        user_for_basket = db_sess.query(User).filter(User.name == user.name, User.surname == user.surname).first()
+        basket = Basket(
+            user_id=user_for_basket.id,
+        )
+        db_sess.add(basket)
+        db_sess.commit()
         return redirect('/login')
     return render_template('register.html', title='Registration', form=form)
 
@@ -86,12 +131,10 @@ def login():
             prod = db_sess.query(Product).all()
             return render_template('index.html', name=user.name, prod=prod)
         return render_template('login.html',
-                                   message="Неправильный логин или пароль",
-                                   form=form)
+                               message="Неправильный логин или пароль",
+                               form=form)
     return render_template('login.html', title='Авторизация', form=form)
 
-
-# Работаю здесь --------------------------------------------------------------------------
 
 @app.route('/addproduct', methods=['GET', 'POST'])
 def addproduct():
@@ -116,4 +159,3 @@ def addproduct():
 
 if __name__ == '__main__':
     main()
-##

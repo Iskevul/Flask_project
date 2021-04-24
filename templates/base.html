@@ -24,7 +24,14 @@
 				<nav>
 					<!-- {% block title %}{% endblock %} -->
 					{% if current_user.is_authenticated %}
-					    <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+					    {% if current_user.id == 1 %}
+					    	<a class="btn btn-dark" href="/addproduct" style="margin-right: 20px;">Добавить продукт</a>
+					    	<a class="btn btn-dark" href="/view_basket" style="margin-right: 20px;">Просмотреть корзину</a>
+					    	<a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+					    {% else %}
+					    	<a class="btn btn-dark" href="/view_basket" style="margin-right: 20px;">Просмотреть корзину</a>
+					    	<a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+					    {% endif %}
 					{% else %}
 					    <p>
 					        <a class="btn btn-dark " href="/register">Зарегистрироваться</a>

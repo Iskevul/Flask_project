@@ -22,7 +22,7 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
                                       default=datetime.datetime.now)
     # news = orm.relation("News", back_populates='user')
     # jobs = orm.relation("Jobs", back_populates='user')
-    products = orm.relation("Product", back_populates='user')
+    baskets = orm.relation("Basket", back_populates='user')
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)

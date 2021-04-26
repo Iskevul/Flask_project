@@ -7,6 +7,8 @@ from data.baskets import Basket
 from forms.user_form import *
 from forms.product_form import ProductForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
+import product_api
+import user_api
 import os
 
 app = Flask(__name__)
@@ -70,7 +72,8 @@ def main():
     db_session.global_init("db/blogs.db")
     db_sess = db_session.create_session()
     db_sess.commit()
-
+    app.register_blueprint(product_api.blueprint)
+    app.register_blueprint(user_api.blueprint)
     app.run()
 
 
@@ -158,13 +161,13 @@ def addproduct():
     return render_template('addproduct.html', form=form)
 
 
-# if __name__ == '__main__':
-#     main()
-
-
 if __name__ == '__main__':
-    db_session.global_init("db/blogs.db")
-    db_sess = db_session.create_session()
-    db_sess.commit()
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    main()
+
+
+# if __name__ == '__main__':
+#     db_session.global_init("db/blogs.db")
+#     db_sess = db_session.create_session()
+#     db_sess.commit()
+#     port = int(os.environ.get("PORT", 5000))
+#     app.run(host='0.0.0.0', port=port)
